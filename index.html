@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>нейм | Фотопортфолио</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 1rem 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav li {
+            margin: 0 20px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #4ecdc4;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+        
+        /* About Section */
+        #about {
+            background-color: #141414;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Portfolio Section */
+        #portfolio {
+            background-color: #0a0a0a;
+        }
+        
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 300px;
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Photographers Section */
+        #photographers {
+            background-color: #141414;
+        }
+        
+        .photographers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .photographer-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .photographer-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .photographer-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .photographer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photographer-info {
+            padding: 20px;
+        }
+        
+        .photographer-name {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80') no-repeat center center/cover;
+            text-align: center;
+        }
+        
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-info p {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #4ecdc4;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 10px 0;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation тег для навигации -->
+    <nav>
+        <ul>
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#about">О нас</a></li>
+            <li><a href="#portfolio">Портфолио</a></li>
+            <li><a href="#photographers">Фотографы</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header тег для шапки сайта -->
+    <header id="home">
+        <h1 class="logo">Тип фотографф</h1>
+        <p class="tagline">Профессиональная фотосъемка для ваших самых важных моментов</p>
+        <a href="#portfolio" class="btn">Наши работы</a>
+    </header>
+
+    <!-- About Section тег для секции "О нас" -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">О нас</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Мы - команда профессиональных фотографов, посвятивших себя искусству запечатления прекрасных моментов жизни. Наш коллектив состоит из талантливых специалистов, каждый из которых обладает уникальным стилем и видением.</p>
+                    <p>С 2010 года мы создаем фотографии, которые рассказывают истории, передают эмоции и сохраняют память о важных событиях на долгие годы.</p>
+                    <p>Наша философия проста - каждый момент уникален и заслуживает того, чтобы быть запечатленным в идеальном кадре.</p>
+                </div>
+                <div class="about-image">
+                    <!-- Img тег для изображения -->
+                    <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Фотограф за работой">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section тег для секции портфолио -->
+    <section id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Наши работы</h2>
+            <div class="portfolio-gallery">
+                <!-- Div тег для элемента портфолио -->
+                <div class="portfolio-item">
+                    <!-- Img тег для изображения работы -->
+                    <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Портретная фотография">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Портретная съемка</h3>
+                        <p>Индивидуальные и групповые портреты</p>
+                    </div>
+                </div>
+                <!-- Div тег для элемента портфолио -->
+                <div class="portfolio-item">
+                    <!-- Img тег для изображения работы -->
+                    <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Свадебная фотография">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Свадебная фотосессия</h3>
+                        <p>Запечатление самых важных моментов</p>
+                    </div>
+                </div>
+                <!-- Div тег для элемента портфолио -->
+                <div class="portfolio-item">
+                    <!-- Img тег для изображения работы -->
+                    <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Природа">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Пейзажная фотография</h3>
+                        <p>Красота природы в каждом кадре</p>
+                    </div>
+                </div>
+                <!-- Div тег для элемента портфолио -->
+                <div class="portfolio-item">
+                    <!-- Img тег для изображения работы -->
+                    <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Архитектура">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Архитектура</h3>
+                        <p>Современная и классическая архитектура</p>
+                    </div>
+                </div>
+                <!-- Div тег для элемента портфолио -->
+                <div class="portfolio-item">
+                    <!-- Img тег для изображения работы -->
+                    <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Предметная съемка">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Предметная съемка</h3>
+                        <p>Фотосъемка товаров и продуктов</p>
+                    </div>
+                </div>
+                <!-- Div тег для элемента портфолио -->
+                <div class="portfolio-item">
+                    <!-- Img тег для изображения работы -->
+                    <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Макросъемка">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Макросъемка</h3>
+                        <p>Детали, скрытые от обычного взгляда</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photographers Section тег для секции фотографов -->
+    <section id="photographers">
+        <div class="container">
+            <h2 class="section-title">Наши фотографы</h2>
+            <div class="photographers-grid">
+                <!-- Article тег для карточки фотографа -->
+                <article class="photographer-card">
+                    <div class="photographer-image">
+                        <!-- Img тег для фото фотографа -->
+                        <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Габриэль Сива">
+                    </div>
+                    <div class="photographer-info">
+                        <h3 class="photographer-name">Габриэль Сива</h3>
+                        <p>Специалист по портретной и свадебной съемке</p>
+                    </div>
+                </article>
+                <!-- Article тег для карточки фотографа -->
+                <article class="photographer-card">
+                    <div class="photographer-image">
+                        <!-- Img тег для фото фотографа -->
+                        <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Анна Легер">
+                    </div>
+                    <div class="photographer-info">
+                        <h3 class="photographer-name">Анна Легер</h3>
+                        <p>Эксперт в области fashion и студийной фотографии</p>
+                    </div>
+                </article>
+                <!-- Article тег для карточки фотографа -->
+                <article class="photographer-card">
+                    <div class="photographer-image">
+                        <!-- Img тег для фото фотографа -->
+                        <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Пая Реал">
+                    </div>
+                    <div class="photographer-info">
+                        <h3 class="photographer-name">Пая Реал</h3>
+                        <p>Мастер пейзажной и travel фотографии</p>
+                    </div>
+                </article>
+                <!-- Article тег для карточки фотографа -->
+                <article class="photographer-card">
+                    <div class="photographer-image">
+                        <!-- Img тег для фото фотографа -->
+                        <img src="https://i.pinimg.com/736x/88/f8/9b/88f89be55279f97c920e18aabc0d8cae.jpg" alt="Денис Ческидов">
+                    </div>
+                    <div class="photographer-info">
+                        <h3 class="photographer-name">Денис Ческидов</h3>
+                        <p>Специалист по предметной и макросъемке</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section тег для секции контактов -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Свяжитесь с нами</h2>
+            <div class="contact-info">
+                <p>Готовы создать вместе что-то прекрасное? Свяжитесь с нами для обсуждения вашего проекта.</p>
+                <p>Email: <a href="mailto:hello@wecapture.world" style="color: #4ecdc4;">hello@wecapture.world</a></p>
+                <p>Телефон: <a href="tel:+888303322425" style="color: #4ecdc4;">+888 303 322 425</a></p>
+                <a href="mailto:hello@wecapture.world" class="btn">Написать нам</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer тег для подвала сайта -->
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+        <p>&copy; 2023 и тут снова нейм. Все права защищены.</p>
+    </footer>
+</body>
+</html>
